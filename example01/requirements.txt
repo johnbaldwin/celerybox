@@ -1,0 +1,4 @@
+# Example01 Python requirements
+#
+# 5.2.3 released December 29, 2021 - https://pypi.org/project/celery/
+celery==5.2.3

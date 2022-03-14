@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  rabbitmq:
+    container_name: basic-rabbitmq
+    image: rabbitmq:3.9.13-management
+    environment:
+      RABBITMQ_DEFAULT_USER: "admin"
+      RABBITMQ_DEFAULT_PASS: "admin"
+    # You can also set environment vars with a .env file as such:
+    # env_file: rabbitmq.env
+    ports:
+      # The standard AMQP protocol port
+      - 5672:5672
+      # The RabbitMQ web management UI port
+      - 15672:15672
+    volumes:
+      - .:/workspace
