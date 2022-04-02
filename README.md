@@ -17,7 +17,7 @@ This repo is a simple [Celery](https://docs.celeryq.dev/) sandbox environment. I
 
 * [rabbitmq](./rabbitmq) - RabbitMQ Docker Compose set-up
 * [example01](./example01) - Basic Celery example to run a worker and a app to run tasks
-
+* [example02](./example02) - Builds on example01 with the Celery worker running in Docker
 
 ## Architecture
 
