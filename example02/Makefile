@@ -1,0 +1,27 @@
+.PHONY: help start.worker
+# Make sure you create the .env file with the variables specified in the `.env.template` file
+
+makefile_name := $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
+
+# include .env
+
+help:  ## display this help message
+	@echo "Please use \`make <target>' where <target> is one of"
+	@grep '^[a-zA-Z]' $(makefile_name) | sort | awk -F ':.*?## ' 'NF==2 {printf "\033[36m  %-25s\033[0m %s\n", $$1, $$2}'
+
+up:  ## Build, (re)creates, starts containers
+	docker-compose up --build
+
+down:  ## Stop and remove the Docker containers
+	docker-compose down
+
+recompose: down up  ## down, rebuild up
+
+worker.ssh:  ## SSH to the Celery worker container
+	@docker exec -it example02-worker /bin/bash
+
+worker.logs:  ## Show logs on the Celery worker container
+	@docker container logs example02-worker
+
+run.docker-worker.bash:  ## start the worker container to a bash shell for troubleshooting
+	docker run -it --entrypoint /bin/bash celerybox/example02-worker -s

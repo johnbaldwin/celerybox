@@ -1,0 +1,32 @@
+version: '3.9'
+
+# networks:
+#   cbex01-network:
+
+services:
+  rabbitmq:
+    container_name: example02-rabbitmq
+    image: rabbitmq:3.9.13-management
+    environment:
+      RABBITMQ_DEFAULT_USER: "admin"
+      RABBITMQ_DEFAULT_PASS: "admin"
+    ports:
+      # The standard AMQP protocol port
+      - 5672:5672
+      # The RabbitMQ web management UI port
+      - 15672:15672
+    volumes:
+      # TODO: revisit this
+      - .:/workspace
+
+  worker:
+    image: celerybox/example02-worker
+    container_name: example02-worker
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+    restart: 'no'
+    environment:
+      BROKER_HOST: 'rabbitmq'
